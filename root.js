@@ -5,7 +5,7 @@ import { Drivers } from './classes/Driver.js';
 import { Errors, ERRORS } from './classes/Error.js';
 import { Trips } from './classes/Trip.js';
 // variables
-const fileToRead = process.argv[2];
+const fileToRead = process.argv.length > 2 ? process.argv[2] : 'sample-file.txt';
 const text = fs.readFileSync(fileToRead).toString('utf-8');
 const textByLine = text.split("\n").map(t => t.replace('\r', ''));
 
@@ -50,7 +50,13 @@ fs.writeFile("output.txt", DRIVERS.generateAllReports().toString().split(',').jo
 });
 
 fs.writeFile('errors.txt', ERRORS.generateErrorReport().toString().split(',').join('\n'), function(err) {
-    if(err) {
+    if (err) {
         return console.log(err);
     }
 });
+
+export default  {
+    textByLine: textByLine,
+    DRIVERS: DRIVERS,
+    TRIPS: TRIPS
+}
